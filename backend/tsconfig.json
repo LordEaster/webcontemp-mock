@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                          // Specify ECMAScript target version
+    "module": "commonjs",                     // Use CommonJS module system
+    "outDir": "./dist",                       // Output directory for compiled files
+    "rootDir": "./src",                     // Root directory of input files
+    "strict": true,                           // Enable strict type-checking options
+    "esModuleInterop": true,                  // Enable compatibility between CommonJS and ES Modules
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistent casing in imports
+    "skipLibCheck": true                      // Skip type checking of declaration files
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
+}

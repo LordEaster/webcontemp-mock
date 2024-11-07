@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  api-db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - '2301:5432'
+
+  backend:
+    build: ./backend
+    command: node dist/index.js
+    ports:
+      - '2302:3000'
+    depends_on:
+      - api-db
+    environment:
+      - JWT_SECRET=your_secret_key
+
+volumes:
+  db_data:
