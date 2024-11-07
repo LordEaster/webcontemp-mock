@@ -164,7 +164,7 @@ app.get('/users/:userId/items', authenticateToken, async (req: Request, res: Res
 
     try {
         const result = await pool.query(
-        'SELECT * FROM items WHERE user_id = $1 JOIN users ON items.user_id = users.id',
+        'SELECT * FROM items  JOIN users ON items.user_id = users.id WHERE user_id = $1',
         [userId]
         );
         res.json(result.rows);
