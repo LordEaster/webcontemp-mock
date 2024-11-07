@@ -5,8 +5,13 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 
+const corsOptions = {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+};
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Secret key for JWT (store this securely in production)
