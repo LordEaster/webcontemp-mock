@@ -1,12 +1,12 @@
-// src/index.ts
-
 import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import pool from './db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 // Secret key for JWT (store this securely in production)
