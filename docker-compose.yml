@@ -15,6 +15,7 @@ services:
   backend:
     build: ./backend
     command: node dist/index.js
+    restart: always
     ports:
       - '2302:3000'
     depends_on:
