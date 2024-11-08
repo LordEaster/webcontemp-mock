@@ -1,0 +1,17 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "strict": true,
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "types": ["svelte"],
+    "lib": ["DOM", "ESNext"],
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*", "src/global.d.ts"],
+  "exclude": ["node_modules/*", "public/*"]
+}
