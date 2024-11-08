@@ -131,24 +131,31 @@ app.get('/users', authenticateToken, async (req: Request, res: Response): Promis
 // Create a new item in the user's bag
 app.post('/users/:userId/items', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const { item_name, quantity } = req.body;
-    const { userId } = req.params;
+    const userId = parseInt(req.params.userId, 10); // Ensure userId is an integer
 
     // Ensure the user is accessing their own data
-    if (parseInt(userId) !== req.user?.userId) {
-        res.status(403).json({ error: 'Forbidden' });
+    if (userId !== req.user?.userId) {
+        res.status(403).json({ error: 'Forbidden: You can only add items to your own account' });
+        return;
+    }
+
+    // Validate required fields
+    if (!item_name) {
+        res.status(400).json({ error: 'Item name is required' });
         return;
     }
 
     try {
+        // Insert the new item into the database, generating a unique item ID
         const result = await pool.query(
-        'INSERT INTO items (user_id, item_name, quantity) VALUES ($1, $2, $3) RETURNING *',
-        [userId, item_name, quantity || 1]
+            'INSERT INTO items (user_id, item_name, quantity) VALUES ($1, $2, $3) RETURNING *',
+            [userId, item_name, quantity || 1]
         );
-        res.status(201).json(result.rows[0]);
-        return;
+
+        res.status(201).json(result.rows[0]); // Return the created item with its unique item ID
     } catch (err: any) {
-        res.status(400).json({ error: err.message });
-        return;
+        console.error('Error inserting item:', err);
+        res.status(500).json({ error: 'Failed to add item to the database' });
     }
 });
 
